@@ -6,11 +6,10 @@ import NavUtils from "./NavUtils"
 
 export default function Navbar() {
     return (
-        <div className="w-full bg-[#292929] pb-2">
-            <div className="w-[90%] max-w-[110rem] flex xl:h-20 items-center justify-between mx-auto">
+        <div className="w-full bg-[#292929] pb-1">
+            <div className="w-[94%] max-w-[110rem] flex xl:h-20 items-center justify-between mx-auto">
                 <div className="flex justify-center items-center w-full xl:w-auto ">
-                    <Link className="flex xl:flex-row flex-row-reverse xl:justify-center justify-between w-full xl:w-auto items-center mx-5 gap-10" href='/'>
-                        <Image quality={100} src="navLink.svg"  width={51} className="hidden xl:block" height={10} alt="image"></Image>
+                    <Link className="flex xl:flex-row flex-row-reverse xl:justify-center justify-between w-full xl:w-auto items-center " href='/'>
                         <NavUtils/>
                         <div className="flex justify-center items-center gap-3">
                             <Image quality={100} src="GDSCicon.svg" width={61} height={10} alt="image"></Image>
