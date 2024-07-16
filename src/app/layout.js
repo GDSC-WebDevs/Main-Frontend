@@ -1,7 +1,8 @@
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
-import './globals.css';
 import Navbar from '@/components/Navbar/Navbar';
+import { Toaster } from "react-hot-toast";
+import './globals.css';
 
 // const geistSans = GeistSans();
 // const geistMono = GeistMono();
@@ -17,6 +18,10 @@ export default function RootLayout({ children }) {
       <body>
         <div className="max-w-[110rem] mx-auto">
           <Navbar />
+          <Toaster
+            position="bottom-right"
+            reverseOrder={false}
+          />
           {children}
         </div>
       </body>
