@@ -5,7 +5,7 @@ import NavUtils from "./NavUtils"
 
 export default function Navbar() {
     return (
-        <div className="w-full bg-[#292929] pb-1">
+        <div className="w-screen bg-[#292929] pb-1">
             <div className="w-[94%] max-w-[110rem] flex xl:h-20 items-center justify-between mx-auto">
                 <div className="flex justify-center items-center w-full xl:w-auto ">
                     <Link className="flex xl:flex-row flex-row-reverse xl:justify-center justify-between w-full xl:w-auto items-center " href='/'>
