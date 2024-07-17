@@ -1,6 +1,5 @@
 "use client"
 
-import StarRating from "./Starrating";
 import { Loader, CloudUpload } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import { useState } from "react";
@@ -19,7 +18,7 @@ const imageFileSchema = z.custom((file) => {
     const validTypes = ["image/jpeg", "image/png", "image/jpg"];
     return validTypes.includes(file.type);
 }, {
-    message: "Invalid file type. Only jpg, png, or svg files are allowed."
+    message: "Invalid file type. Only jpg, png, or jpeg files are allowed."
 });
 
 const schema = z.object({
@@ -39,6 +38,7 @@ const schema = z.object({
         z.number().positive({ message: "CTC must be a positive number" }).optional()
     ),
     experience: z.string(),
+    level:z.enum(['easy', 'medium', 'hard'],{message:"Please select the level of your experience"}),
     confirm: z.boolean().refine(value => value === true, { message: "Please confirm that all information provided is accurate" }),
 });
 
@@ -48,7 +48,6 @@ const schema = z.object({
 export default function Form1() {
 
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({ resolver: zodResolver(schema) });
-    const [rating, setRating] = useState(5);
     const [file1, setFile1] = useState(null);
     const [file2, setFile2] = useState(null);
 
@@ -57,7 +56,7 @@ export default function Form1() {
     const onSubmit = async (data) => {
         const validTypes = ["image/jpeg", "image/png", "image/jpg"];
         if ((file1 && !validTypes.includes(file1.type)) || (file2 && !validTypes.includes(file2.type))) {
-            toast.error('Invalid file type. Only jpg, png, or svg files are allowed.');
+            toast.error('Invalid file type. Only jpg, png, or jpeg files are allowed.');
             return;
         }
 
@@ -77,35 +76,25 @@ export default function Form1() {
         }
         const { profilepic, logo } = tmp;
         const { confirm, ...rest } = data;
-        const dataWithRating = { ...rest, rating, profilepic, logo };
-        const fdata = new FormData();
-        fdata.append('data', fdata);
+        const actualData = { ...rest, profilepic, logo };
+        console.log(actualData)
         // await new Promise((resolve) => setTimeout(resolve, 4000));
         const res2 = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/experience/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(dataWithRating)
+            body: JSON.stringify(actualData)
         });
         const response = await res2.json();
         if (!res2.ok) {
             toast.error('An error occurred while submitting the form. Please try again later.');
             return;
         }
-        console.log(response);
         toast.success('Form submitted successfully! Thank you for sharing', {
             duration: 5000,
         })
     }
-
-
-
-
-    const handleRatingChange = (value) => {
-        setRating(value);
-    };
-
 
 
     return (
@@ -160,6 +149,17 @@ export default function Form1() {
                                                 {errors[field.name] && <p className="text-red-500 text-md">{errors[field.name].message}</p>}
                                             </div>
                                         ))}
+                                        
+                                        <p className='text-white text-lg pt-10'>Your Experience</p>
+                                        <select name="level" {...register("level")} className="bg-[#323232] text-[#A8A8A8] flex  justify-center items-center  w-full h-16 rounded-md mt-3 px-3 text-lg" >
+                                            <option value="" selected disabled hidden>Select Level of Your Experience</option>
+                                            <option value="easy">Easy</option>
+                                            <option value="medium">Medium</option>
+                                            <option value="hard">Hard</option>
+                                        </select>
+                                        {errors.level && <p className="text-red-500 text-md">{errors.level.message}</p>}
+                                        
+
                                         <div className="md:hidden block">
                                             {/* <Formbutton /> */}
                                             <div>
@@ -167,9 +167,6 @@ export default function Form1() {
                                                 <label className=" flex justify-center items-center text-center w-full bg-[#323232] h-16 rounded-md mt-8"><CloudUpload className="mx-2" />Please Upload Your Company Logo<input accept=".png,.jpg,.jpeg" id="file2" onChange={(e) => setFile2(e.target.files[0])} type="file" className="opacity-0 absolute w-full" /></label>
                                             </div>
                                         </div>
-                                        <p className='text-white text-lg pt-10'>Rate Your Experience</p>
-                                        <span className="text-sm text-yellow-200">(out of 5 stars)</span>
-                                        <StarRating rating={rating} onRatingChange={handleRatingChange} />
                                     </div>
                                 </div>
                                 <div className="w-[86%] mx-auto">
