@@ -30,7 +30,7 @@ export default function Form2() {
 
     const onSubmit = async (data) => {
         const validTypes = ["image/jpeg", "image/png", "image/jpg"];
-        if(!file) {
+        if (!file) {
             toast.error('Please upload a payment reciept.');
             return;
         }
@@ -55,7 +55,7 @@ export default function Form2() {
         const { paymentRecipt } = tmp;
         const { confirm, ...rest } = data;
         const rem_data = { ...rest, paymentRecipt };
-        
+
         const res2 = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/registation/`, {
             method: 'POST',
             headers: {
@@ -100,7 +100,15 @@ export default function Form2() {
 
                             <button className="flex justify-center items-center text-center w-full bg-[#323232] h-58 rounded-md mt-10"><Image src="ORcode.svg" width={238} height={238} className="mx-2" alt="image"></Image></button>
 
-                            <label className="flex  justify-center items-center text-center w-full bg-[#323232] h-16 rounded-md mt-10"><CloudUpload className="mx-2" />Please Upload Your Payment Reciept <input accept=".png,.jpg,.jpeg" id="file1" onChange={(e) => setFile(e.target.files[0])} type="file"  className="opacity-0 absolute w-full" /></label>
+                            <label className="flex  justify-center items-center text-center w-full bg-[#323232] h-16 rounded-md mt-10"><CloudUpload className="mx-2" />Please Upload Your Payment Reciept <input accept=".png,.jpg,.jpeg" id="file1" onChange={(e) => setFile(e.target.files[0])} type="file" className="opacity-0 absolute w-full" /></label>
+                            <label
+                                htmlFor="fileInput"
+                                className=" flex justify-end cursor-pointer"
+
+                            >
+                                {file && <p className=' bg-[#323232] max-w-60 text-blue-400 truncate  px-3 py-1 mt-3  rounded-md  text-md'>{file.name}</p>}
+
+                            </label>
 
 
                             <div className="flex justify-center items-center pt-10">
