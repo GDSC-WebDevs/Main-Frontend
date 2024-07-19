@@ -3,7 +3,6 @@
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { Loader } from 'lucide-react';
-import { useState } from "react";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from "zod";
 
@@ -23,21 +22,26 @@ export default function Form() {
 
 
       const onSubmit =async (data) => {
-        console.log(data);
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/feedback/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-        if (!res.ok) {
-            toast.error('An error occurred while submitting the form. Please try again later.');
-            return;
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/feedback/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            if (!res.ok) {
+                toast.error('An error occurred while submitting the form. Please try again later.');
+                return;
+            }
+            toast.success('Thank you for filling out the form. We will be in touch with you shortly', {
+                duration: 5000,
+            })
+        } catch (error) {
+            toast.error('An error occured while submitting the form. Please try again later', {
+                duration: 6000,
+            })
         }
-        toast.success('Thank you for filling out the form. We will be in touch with you shortly', {
-            duration: 5000,
-        })
       }
 
   return (

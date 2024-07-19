@@ -39,7 +39,8 @@ export default function Form2() {
             return;
         }
 
-        const formData = new FormData();
+        try {
+            const formData = new FormData();
         formData.append('file', file);
 
         const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/registation/upload`, {
@@ -70,6 +71,12 @@ export default function Form2() {
         toast.success('Form submitted successfully! Thank you for registering', {
             duration: 5000,
         })
+        } catch (error) {
+            toast.error('An error occured while submitting the form. Please try again later', {
+                duration: 6000,
+            })
+        }
+        
     }
 
 
