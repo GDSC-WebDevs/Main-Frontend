@@ -50,7 +50,8 @@ export default function Form1() {
             return;
         }
 
-        const formData = new FormData();
+        try {
+            const formData = new FormData();
         formData.append('file1', file1);
         formData.append('file2', file2);
 
@@ -84,6 +85,11 @@ export default function Form1() {
         toast.success('Form submitted successfully! Thank you for sharing', {
             duration: 5000,
         })
+        } catch (error) {
+            toast.error('An error occured while submitting the form. Please try again later', {
+                duration: 6000,
+            })
+        }
     }
 
 
@@ -157,8 +163,8 @@ export default function Form1() {
                                         ))}
 
                                         <p className='text-white text-lg pt-10'>Your Experience</p>
-                                        <select name="level" {...register("level")} className="bg-[#323232] text-[#A8A8A8] flex  justify-center items-center  w-full h-16 rounded-md mt-3 px-3 text-lg" >
-                                            <option value="" selected disabled hidden>Select Level of Your Experience</option>
+                                        <select name="level" {...register("level")} className="bg-[#323232] text-[#A8A8A8] flex  justify-center items-center  w-full h-16 rounded-md mt-3 px-3 text-lg" defaultValue={"default"} >
+                                            <option value="default"  disabled hidden>Select Level of Your Experience</option>
                                             <option value="easy">Easy</option>
                                             <option value="medium">Medium</option>
                                             <option value="hard">Hard</option>
