@@ -100,9 +100,9 @@ export default function Form2() {
 
                             <button className="flex justify-center items-center text-center w-full bg-[#323232] h-58 rounded-md mt-10"><Image src="ORcode.svg" width={238} height={238} className="mx-2" alt="image"></Image></button>
 
-                            <label className="flex  justify-center items-center text-center w-full bg-[#323232] h-16 rounded-md mt-10"><CloudUpload className="mx-2" />Please Upload Your Payment Reciept <input accept=".png,.jpg,.jpeg" id="file1" onChange={(e) => setFile(e.target.files[0])} type="file" className="opacity-0 absolute w-full" /></label>
+                            <label className="flex  justify-center items-center text-center w-full bg-[#323232] h-16 rounded-md mt-10"><CloudUpload className="mx-2" />Please Upload Your Payment Reciept <input accept=".png,.jpg,.jpeg" id="file1" onChange={(e) => setFile(e.target.files[0])} type="file" className="opacity-0 absolute " /></label>
                             <label
-                                htmlFor="fileInput"
+                                htmlFor="file"
                                 className=" flex justify-end cursor-pointer"
 
                             >

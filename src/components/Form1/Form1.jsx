@@ -10,16 +10,6 @@ import { z } from "zod";
 const linkedInRegex = /^https:\/\/www\.linkedin\.com\/in\/[A-z0-9_-]+\/?$/;
 const githubRegex = /^https:\/\/github\.com\/[A-z0-9_-]+\/?$/;
 const PhoneNumberRegex = /^(\+91)?[6789]\d{9}$/;
-const imageFileSchema = z.custom((file) => {
-    if (!(file instanceof File)) {
-        return false;
-    }
-
-    const validTypes = ["image/jpeg", "image/png", "image/jpg"];
-    return validTypes.includes(file.type);
-}, {
-    message: "Invalid file type. Only jpg, png, or jpeg files are allowed."
-});
 
 const schema = z.object({
     name: z.string().min(1, { message: "Please enter your name" }),
@@ -129,18 +119,18 @@ export default function Form1() {
                                         <div className="hidden md:block">
                                             {/* <Formbutton /> */}
                                             <div>
-                                                <label className="flex  justify-center items-center text-center w-full bg-[#323232] h-16 rounded-md mt-10"><CloudUpload className="mx-2" />Please Upload Your Picture <input accept=".png,.jpg,.jpeg" id="file1" onChange={(e) => setFile1(e.target.files[0])} type="file" className="opacity-0 absolute w-full" /></label>
+                                                <label className="flex  justify-center items-center text-center w-full bg-[#323232] h-16 rounded-md mt-10"><CloudUpload className="mx-2" />Please Upload Your Picture <input accept=".png,.jpg,.jpeg" id="file1" onChange={(e) => setFile1(e.target.files[0])} type="file" className="opacity-0 absolute " /></label>
                                                 <label
-                                                    htmlFor="fileInput"
+                                                    htmlFor="file1"
                                                     className=" flex justify-end cursor-pointer"
                                                     
                                                 >
                                                   { file1 && <p className=' bg-[#323232] max-w-60 text-blue-400 truncate  px-3 py-1 mt-3  rounded-md  text-md'>{file1.name}</p>}
                                                     
                                                 </label>
-                                                <label className=" flex justify-center items-center text-center w-full bg-[#323232] h-16 rounded-md mt-8"><CloudUpload className="mx-2" />Please Upload Your Company Logo<input accept=".png,.jpg,.jpeg" id="file2" onChange={(e) => setFile2(e.target.files[0])} type="file" className="opacity-0 absolute w-full" /></label>
+                                                <label className=" flex justify-center items-center text-center w-full bg-[#323232] h-16 rounded-md mt-8"><CloudUpload className="mx-2" />Please Upload Your Company Logo<input accept=".png,.jpg,.jpeg" id="file2" onChange={(e) => setFile2(e.target.files[0])} type="file" className="opacity-0 absolute " /></label>
                                                 <label
-                                                    htmlFor="fileInput"
+                                                    htmlFor="file2"
                                                     className=" flex justify-end cursor-pointer"
                                                     
                                                 >
@@ -179,8 +169,24 @@ export default function Form1() {
                                         <div className="md:hidden block">
                                             {/* <Formbutton /> */}
                                             <div>
-                                                <label htmlFor='file1' className="flex  justify-center items-center text-center w-full bg-[#323232] h-16 rounded-md mt-10"><CloudUpload className="mx-2" />Please Upload Your Picture <input accept=".png,.jpg,.jpeg" id="file1" onChange={(e) => setFile1(e.target.files[0])} type="file" className="hidden" /></label>
-                                                <label htmlFor='file2' className=" flex justify-center items-center text-center w-full bg-[#323232] h-16 rounded-md mt-8"><CloudUpload className="mx-2" />Please Upload Your Company Logo<input accept=".png,.jpg,.jpeg" id="file2" onChange={(e) => setFile2(e.target.files[0])} type="file" className="hidden" /></label>
+                                                <label className="flex  justify-center items-center text-center w-full bg-[#323232] h-16 rounded-md mt-10"><CloudUpload className="mx-2" />Please Upload Your Picture <input accept=".png,.jpg,.jpeg" id="file1" onChange={(e) => setFile1(e.target.files[0])} type="file" className="opacity-0 absolute " /></label>
+                                                <label
+                                                    htmlFor="file1"
+                                                    className=" flex justify-end cursor-pointer"
+                                                    
+                                                >
+                                                  { file1 && <p className=' bg-[#323232] max-w-60 text-blue-400 truncate  px-3 py-1 mt-3  rounded-md  text-md'>{file1.name}</p>}
+                                                    
+                                                </label>
+                                                <label className=" flex justify-center items-center text-center w-full bg-[#323232] h-16 rounded-md mt-8"><CloudUpload className="mx-2" />Please Upload Your Company Logo<input accept=".png,.jpg,.jpeg" id="file2" onChange={(e) => setFile2(e.target.files[0])} type="file" className="opacity-0 absolute" /></label>
+                                                <label
+                                                    htmlFor="file2"
+                                                    className=" flex justify-end cursor-pointer"
+                                                    
+                                                >
+                                                  { file2 && <p className=' bg-[#323232] max-w-60 text-blue-400 truncate  px-3 py-1 mt-3  rounded-md  text-md'>{file2.name}</p>}
+                                                    
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
@@ -188,9 +194,9 @@ export default function Form1() {
                                 <div className="w-[86%] mx-auto">
                                     <div className="flex  items-center pt-10">
                                         <input {...register("confirm")} type="checkbox" id="concent_btn" className="w-5 cursor-pointer h-12 bg-black" />
-                                        <label htmlFor="concent_btn" className="cursor-pointer text-md text-[#AFAFAF] pl-4">I hereby confirm that all information provided by me is accurate.</label>
+                                        <label htmlFor="concent_btn" className="cursor-pointer text-sm md:text-md text-[#AFAFAF] pl-4">I hereby confirm that all information provided by me is accurate.</label>
                                     </div>
-                                    {errors.confirm && <p className="text-red-500 text-lg">{errors.confirm.message}</p>}
+                                    {errors.confirm && <p className="text-red-500 md:text-lg">{errors.confirm.message}</p>}
 
                                     <button disabled={isSubmitting} className="flex justify-center text-black text-3xl mb-20 font-semibold items-center text-center w-full bg-[#FAD869] h-16 rounded-md mt-8">
                                         {isSubmitting ? <div className="flex justify-center items-center bg-[#a18837] h-full w-full text-black"> <Loader className="animate-spin text-black mx-2 " color="#000000" size={28} />Please Wait</div> : "Submit"}
@@ -204,17 +210,6 @@ export default function Form1() {
         </div>
     )
 }
-
-
-// function Formbutton() {
-//     return (
-//         <div>
-//             <button className="flex  justify-center items-center text-center w-full bg-[#323232] h-16 rounded-md mt-10"><CloudUpload className="mx-2" />Please Upload Your Picture <input accept=".png,.jpg,.jpeg" id="file1" onChange={(e) => setFile1(e.target.files[0])} type="file" className="opacity-0 absolute w-full" /></button>
-//             <button className=" flex justify-center items-center text-center w-full bg-[#323232] h-16 rounded-md mt-8"><CloudUpload className="mx-2" />Please Upload Your Company Logo<input accept=".png,.jpg,.jpeg" id="file2" onChange={(e) => setFile2(e.target.files[0])} type="file" className="opacity-0 absolute w-full" /></button>
-//         </div>
-//     )
-// }
-
 
 // Form fields are defined here
 const formFields = [
